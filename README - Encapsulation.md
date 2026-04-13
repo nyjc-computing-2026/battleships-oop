@@ -77,13 +77,9 @@ ship1 = Ship(name="Battleship", symbol="B", length="4")
 
 `__init__()` is called the **constructor method** of `Ship`. The arguments passed to the constructor follow the constructor method interface.
 
-### Exercise
+## Working with objects
 
-Refactor the functions in `player.py` and `grid.py` to use the `Ship` class attributes instead of `dict` keys.
-
-## Instance methods
-
-To make the `hit()` and `is_sunk()` methods work with this `Ship` class, we would modify them as follows:
+To make the `hit()` and `is_sunk()` functions work with this `Ship` class, we would modify them as follows:
 
 ```python
 def hit(ship: Ship) -> None:
@@ -117,6 +113,12 @@ Notice the different terms we use:
 - **method**: a function bound to an object
 
 Notice also that `Ship` and `ship1` refer to different things. `Ship` refers to the blueprint used to create `ship1` and other ship objects. `Ship` is called the **class** of the `ship1` **instance**.
+
+## Exercise: refactoring
+
+Refactor the functions in `player.py` and `grid.py` to use the `Ship` class attributes instead of `dict` keys.
+
+## Instance methods
 
 Since `hit()` and `is_sunk()` only work on `Ship` objects, it is unlikely we will ever use them with any other objects. We might as well bundle them into the `Ship` class as methods:
 
@@ -167,7 +169,7 @@ if ship1.is_sunk():
 
 **Important:** Notice that in the method interface, `self` is always the first parameter. However, when calling the method, we do not need to pass it as an argument: Python will "inject" the instance for us.
 
-### Exercise
+### Exercise: refactoring
 
 1. Refactor the player dict in `player.py` as a `Player` class.
 2. Refactor the grid dict in `grid.py` as a `Grid` class.
