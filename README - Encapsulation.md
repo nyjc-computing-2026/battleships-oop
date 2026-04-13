@@ -86,7 +86,7 @@ def hit(ship: Ship) -> None:
     """Register a hit on the ship by incrementing its hit counter.
 
     Arguments:
-        ship: dict -- the ship to register the hit on
+        ship: Ship -- the ship to register the hit on
 
     Returns:
         None
@@ -98,7 +98,7 @@ def is_sunk(ship: Ship) -> bool:
     """Check if the ship is sunk by comparing its hit counter to its length.
 
     Arguments:
-        ship: dict -- the ship to check
+        ship: Ship -- the ship to check
 
     Returns:
         True if the ship is sunk, False otherwise.
@@ -112,7 +112,7 @@ Notice the different terms we use:
 - **attribute**: a variable bound to an object
 - **method**: a function bound to an object
 
-Notice also that `Ship` and `ship1` refer to different things. `Ship` refers to the blueprint used to create `ship1` and other ship objects. `Ship` is called the **class** of the `ship1` **instance**.
+Notice also that `Ship` and `ship1` refer to different things. `Ship` refers to the blueprint used to create `ship1` and other ship objects. `Ship` is called the **class** and `ship1` the **instance**.
 
 ## Exercise: refactoring
 
