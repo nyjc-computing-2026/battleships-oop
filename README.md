@@ -63,3 +63,5 @@ Determine how the functions can be bundled into modules in a way that makes the 
 How would you test that each of these modules/functions is doing the correct thing?
 
 Initially you might do some manual testing, running the game and entering inputs manually to visually inspect of the result is correct. But this gets tiring quickly. Think about how you could automate this part: instead of relying on manual input, is there a way to write the actions you take as code instead, so you can run it as a test?
+
+As you go, you might find that some functions still involve a lot of implementation. you can and should "hallucinate" more functions as necessary to further chunk the code into parts.
