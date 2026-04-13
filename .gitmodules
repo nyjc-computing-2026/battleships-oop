@@ -1,0 +1,3 @@
+[submodule "autograding"]
+	path = autograding
+	url = https://github.com/nyjc-computing-2324/autograding
