@@ -1,0 +1,51 @@
+{
+    // https://gist.github.com/danielroe/5ea82608dc680fe6c0179240803437ab
+    // Disable telemetry
+  "telemetry.telemetryLevel": "off",
+    // More minimal UI
+    "editor.inlineSuggest.enabled": true,
+    "editor.folding": false,
+    "editor.glyphMargin": false,
+    "editor.minimap.enabled": false,
+    "editor.scrollbar.vertical": "auto",
+    // Autohide chat sidebar
+    "github.copilot.chat.autoOpen": false,
+    "github.copilot.chat.autoShowChat": false,
+    // Other window minimizations
+    "window.commandCenter": false,
+    "workbench.editor.enablePreview": false,
+    "workbench.editor.labelFormat": "short",
+    "workbench.editor.tabSizing": "shrink",
+    "workbench.layoutControl.enabled": false,
+    "workbench.welcomePage.walkthroughs.openOnInstall": false,
+    "workbench.statusBar.visible": true,
+    "breadcrumbs.enabled": false,
+    // Search
+    "search.exclude": {
+      ".gitignore": true,
+      ".gitmodules": true,
+      ".github/": true,
+      ".vscode/": true,
+      "__pycache__/": true,
+      "autograding/": true
+    },
+    "files.exclude": {
+      ".gitignore": true,
+      ".gitmodules": true,
+      ".github/": true,
+      ".vscode/": true,
+      "__pycache__/": true,
+      "autograding/": true,
+    },
+    // Code
+    "editor.wordWrap": "on",
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        ".",
+        "-p",
+        "test_*.py"
+    ],
+    "python.testing.pytestEnabled": false,
+    "python.testing.unittestEnabled": true
+}
