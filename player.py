@@ -182,3 +182,7 @@ def has_player_lost(player: dict, max_turns: int) -> bool:
         if not ship.is_sunk(player_ship):
             return False
     return True
+
+
+if __name__ == "__main__":
+    pass

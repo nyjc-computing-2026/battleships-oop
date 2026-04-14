@@ -187,3 +187,7 @@ def place_ship_on_grid_vertically(
     for i in range(ship['length']):
         grid[x + i][y] = ship['symbol']
     return True
+
+
+if __name__ == "__main__":
+    pass
