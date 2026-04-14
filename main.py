@@ -9,6 +9,7 @@ import utility
 # This section defines the global data used in the game
 
 MAX_TURNS = 30
+PLACEHOLDER = "~"
 
 
 # Main game loop
