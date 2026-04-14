@@ -86,8 +86,8 @@ def main() -> None:
             message = "Computer missed!"
             player.update_attack(computer, row, col, "O")
             player.update_defense(human, row, col, "O")
-        # Show computer's attack board after input
-        grid.display_grid(computer['attack_board'])
+        # Show player's ship board after input
+        grid.display_grid(human['ship_board'])
         print(message)
         computer["turns_taken"] += 1
 
