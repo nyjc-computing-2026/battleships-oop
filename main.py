@@ -9,6 +9,7 @@ import utility
 # This section defines the global data used in the game
 
 MAX_TURNS = 30
+PLACEHOLDER = "~"
 
 
 # Main game loop
@@ -19,8 +20,8 @@ def main() -> None:
     max_turns = 30
     computer = player.create_player(
         name="Computer",
-        ship_board=grid.create_grid(n=grid_size, placeholder="~"),
-        attack_board=grid.create_grid(n=grid_size, placeholder="~"),
+        ship_board=grid.create_grid(n=grid_size, placeholder=PLACEHOLDER),
+        attack_board=grid.create_grid(n=grid_size, placeholder=PLACEHOLDER),
         ships={
             "B": ship.create_ship(name="Battleship", symbol="B", length=4),
             "C": ship.create_ship(name="Cruiser", symbol="C", length=3),
