@@ -63,11 +63,11 @@ def main() -> None:
         # Process human's attack on computer's grid
         hit_char = grid.get_grid_coordinate_char(computer['ship_board'], row, col)
         if hit_char in computer["ships"]:
-            message = f"Hit! You hit the computer's {computer['ships'][hit_char]['name']}!"
+            message = f"Hit! {human['name']} hit {computer['name']}'s {computer['ships'][hit_char]['name']}!"
             player.update_attack(human, row, col, hit_char)
             player.update_defense(computer, row, col, hit_char)
         else:
-            message = "You missed!"
+            message = f"{human['name']} missed!"
             player.update_attack(human, row, col, "O")
             player.update_defense(computer, row, col, "O")
         print(message)
@@ -79,11 +79,11 @@ def main() -> None:
         # Process computer's attack on human's grid
         hit_char = grid.get_grid_coordinate_char(human['ship_board'], row, col)
         if hit_char in human["ships"]:
-            message = f"Computer hit your {human['ships'][hit_char]['name']}!"
+            message = f"Hit! {computer['name']} hit {human['name']}'s {human['ships'][hit_char]['name']}!"
             player.update_attack(computer, row, col, hit_char)
             player.update_defense(human, row, col, "X")
         else:
-            message = "Computer missed!"
+            message = f"{computer['name']} missed!"
             player.update_attack(computer, row, col, "O")
             player.update_defense(human, row, col, "O")
         # Show player's ship board after input
