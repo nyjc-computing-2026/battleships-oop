@@ -24,8 +24,10 @@ def create_grid(n: int, placeholder: str) -> list[list[str]]:
     Each row is filled with the placeholder character.
 
     Arguments:
-        n: int -- the size of the grid (n x n)
-        placeholder: str -- the character to fill the grid with
+        n: int
+            the size of the grid (n x n)
+        placeholder: str
+            the character to fill the grid with
 
     Returns:
         A nested list representing the grid.
@@ -47,9 +49,11 @@ def get_grid_coordinate_char(grid: list[list[str]], x: int, y: int) -> str:
     """Get the character at the specified grid coordinates.
 
     Arguments:
-        grid: list[list[str]] -- the game grid
-        x: int -- the horizontal coordinate
-        y: int -- the vertical coordinate
+        grid: list[list[str]]
+        x: int
+            the horizontal coordinate
+        y: int
+            the vertical coordinate
     
     Returns:
         The character at the specified coordinates on the grid.
@@ -61,23 +65,33 @@ def initialize_grid(grid: list[list[str]], ships: list[dict]) -> None:
     """Initialize the grid by placing ships randomly on the grid.
 
     Arguments:
-        grid: list[list[str]] -- the game grid to initialize
-        ships: list[dict] -- a list of ships to place on the grid
+        grid: list[list[str]]
+            the game grid to initialize
+        ships: list[dict]
+            a list of ships to place on the grid
     
     Returns:
         None
     """
     for ship in ships:
         x, y = utility.generate_random_coordinate(len(grid))
+        orientation = utility.generate_random_orientation()
+        # Keep trying to place the ship until it is successfully placed
+        # on the grid
+        while not place_ship_on_grid(grid, ship, x, y, orientation):
+            x, y = utility.generate_random_coordinate(len(grid))
+            orientation = utility.generate_random_orientation()
 
 
 def is_valid_coordinate(grid: list[list[str]], x: int, y: int) -> bool:
     """Check if the given coordinates are valid for the grid.
 
     Arguments:
-        grid: list[list[str]] -- the game grid
-        x: int -- the row index to validate
-        y: int -- the column index to validate
+        grid: list[list[str]]
+        x: int
+            the row index to validate
+        y: int
+            the column index to validate
 
     Returns:
         True if the coordinates are valid, False otherwise.
@@ -150,7 +164,6 @@ def place_ship_on_grid_vertically(
         ship: dict,
         x: int,
         y: int,
-        orientation: str
 ) -> bool:
     """Place a ship on the grid at the specified coordinates vertically
     (downwards).

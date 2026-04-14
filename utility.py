@@ -18,7 +18,7 @@ def is_valid_coordinate(n: int, row: int, col: int) -> bool:
     Returns:
         True if the coordinates are valid, False otherwise.
     """
-    pass
+    return 0 <= row < n and 0 <= col < n
 
 
 def generate_random_coordinate(n: int) -> tuple[int, int]:
@@ -31,4 +31,14 @@ def generate_random_coordinate(n: int) -> tuple[int, int]:
     Returns:
         A tuple containing the row and column indices as integers.
     """
-    pass
+    return random.randint(0, n - 1), random.randint(0, n - 1)
+
+
+def generate_random_orientation() -> str:
+    """Generate a random orientation for placing a ship.
+
+    Returns:
+        A string representing the orientation, either 'horizontal' or
+        'vertical'.
+    """
+    return random.choice(['horizontal', 'vertical'])

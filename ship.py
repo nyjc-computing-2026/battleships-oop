@@ -9,6 +9,7 @@ Ships are represented with the following data:
   The number of grid spaces the ship occupies.
 """
 
+
 def create_ship(name: str, symbol: str, length: int) -> dict:
     """Create a ship with the given name, symbol, and length.
 
@@ -57,3 +58,7 @@ def is_sunk(ship: dict) -> bool:
         True if the ship is sunk, False otherwise.
     """
     return ship['hits'] >= ship['length']
+
+
+if __name__ == "__main__":
+    pass
