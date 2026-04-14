@@ -261,8 +261,5 @@ Notice that the use of setter methods enables validation to be enforced. This is
    - `grid.place_ship_on_grid_vertically()`
 2. Implement the following functions as methods in `grid.py`:
    - `grid.display_grid()`
-   - `grid.initialize_grid()`
    - `grid.is_valid_coordinate()`
-   - `grid.place_ship_on_grid_horizontally()`
-   - `grid.place_ship_on_grid_vertically()`
 3. Refactor the remaining code to use the methods implemented in `Grid` class.
