@@ -263,3 +263,6 @@ Notice that the use of setter methods enables validation to be enforced. This is
    - `grid.display_grid()`
    - `grid.is_valid_coordinate()`
 3. Refactor the remaining code to use the methods implemented in `Grid` class.
+
+4. Implement `Player.take_turn()` setter method to update the `turns_taken` attribute.
+5. Refactor the main game loop to observe encapsulation principle by using the setter method.
