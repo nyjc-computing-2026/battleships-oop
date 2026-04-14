@@ -203,7 +203,7 @@ class Grid:
     and y representing the vertical coordinate.
     """
 
-    def __init__(self, size: int):
+    def __init__(self, size: int, placeholder: str):
         self._data = []
         for _ in range(n):
             row = [placeholder] * n
