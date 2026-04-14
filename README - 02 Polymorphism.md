@@ -1,4 +1,4 @@
-# Battleships - Object-Oriented Programming: Encapsulation
+# Battleships - Object-Oriented Programming: Polymorphism
 
 The original instructions for the task can be found in [`original_instructions.md`](original_instructions.md).
 
