@@ -157,7 +157,10 @@ def update_defense(
         defender['ship_board'][x][y] = "O"  # Miss
     else:
         defender['ship_board'][x][y] = "X"  # Hit
-        if not ship.is_sunk(defender["ships"][symbol]):
+        if (
+                symbol in defender["ships"]
+                and not ship.is_sunk(defender["ships"][symbol])
+        ):
             ship.hit(defender["ships"][symbol])
 
 
