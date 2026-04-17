@@ -148,7 +148,7 @@ def create_player(
             the player's ship board
         attack_board: list[list[str]]
             the player's attack board
-        ships: dict[str, dict]
+        ships: dict[str, Ship]
             a dictionary mapping ship symbols to their details
 
     Returns:
@@ -159,7 +159,11 @@ def create_player(
             'name': str,
             'ship_board': list[list[str]],
             'attack_board': list[list[str]],
-            'ships': dict[str, dict],
+            'ships': {
+                "B": ...
+                "C": ...
+                "D": ...
+            },
             'turns_taken': int,
         }
     """
