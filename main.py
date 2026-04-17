@@ -42,11 +42,11 @@ def main() -> None:
     # Game setup: populate ship boards and initialize attack boards
     grid.initialize_grid(
         grid=computer["ship_board"],
-        ships=computer["ships"],
+        ships=computer["ships"].values(),
     )
     grid.initialize_grid(
         grid=human["ship_board"],
-        ships=human["ships"],
+        ships=human["ships"].values(),
     )
     human["turns_taken"] = 0
     computer["turns_taken"] = 0
@@ -82,7 +82,7 @@ def main() -> None:
         if hit_char in human["ships"]:
             message = f"Hit! {computer['name']} hit {human['name']}'s {human['ships'][hit_char]['name']}!"
             player.update_attack(computer, row, col, hit_char)
-            player.update_defense(human, row, col, "X")
+            player.update_defense(human, row, col, hit_char)
         else:
             message = f"{computer['name']} missed!"
             player.update_attack(computer, row, col, "O")
