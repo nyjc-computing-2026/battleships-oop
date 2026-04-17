@@ -41,11 +41,11 @@ def main() -> None:
     # Game setup: populate ship boards and initialize attack boards
     grid.initialize_grid(
         grid=computer["ship_board"],
-        ships=computer["ships"],
+        ships=computer["ships"].values(),
     )
     grid.initialize_grid(
         grid=human["ship_board"],
-        ships=human["ships"],
+        ships=human["ships"].values(),
     )
     human["turns_taken"] = 0
     computer["turns_taken"] = 0
