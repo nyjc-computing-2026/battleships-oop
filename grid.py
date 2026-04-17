@@ -134,7 +134,7 @@ def place_ship_on_grid(
 
 def place_ship_on_grid_horizontally(
         grid: list[list[str]],
-        ship: dict,
+        ship: ship.Ship,
         x: int,
         y: int,
 ) -> bool:
@@ -143,7 +143,7 @@ def place_ship_on_grid_horizontally(
 
     Arguments:
         grid: list[list[str]] -- the game grid
-        ship: dict -- the ship to place on the grid
+        ship: Ship -- the ship to place on the grid
         x: int -- the row index for the starting coordinate
         y: int -- the column index for the starting coordinate
     
@@ -151,17 +151,17 @@ def place_ship_on_grid_horizontally(
         True if the ship was successfully placed, False if placement
         failed due to out-of-bounds or overlap with existing ships.
     """
-    for i in range(ship['length']):
+    for i in range(ship.length):
         if not is_valid_coordinate(grid, x, y + i) or grid[x][y + i] != '~':
             return False
-    for i in range(ship['length']):
-        grid[x][y + i] = ship['symbol']
+    for i in range(ship.length):
+        grid[x][y + i] = ship.symbol
     return True
 
 
 def place_ship_on_grid_vertically(
         grid: list[list[str]],
-        ship: dict,
+        ship: ship.Ship,
         x: int,
         y: int,
 ) -> bool:
@@ -170,7 +170,7 @@ def place_ship_on_grid_vertically(
 
     Arguments:
         grid: list[list[str]] -- the game grid
-        ship: dict -- the ship to place on the grid
+        ship: Ship -- the ship to place on the grid
         x: int -- the row index for the starting coordinate
         y: int -- the column index for the starting coordinate
     
@@ -178,14 +178,14 @@ def place_ship_on_grid_vertically(
         True if the ship was successfully placed, False if placement
         failed due to out-of-bounds or overlap with existing ships.
     """
-    for i in range(ship['length']):
+    for i in range(ship.length):
         if (
                 not is_valid_coordinate(grid, x + i, y)
                 or grid[x + i][y] != '~'
         ):
             return False
-    for i in range(ship['length']):
-        grid[x + i][y] = ship['symbol']
+    for i in range(ship.length):
+        grid[x + i][y] = ship.symbol
     return True
 
 
