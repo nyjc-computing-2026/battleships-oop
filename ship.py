@@ -10,7 +10,43 @@ Ships are represented with the following data:
 """
 
 
-def create_ship(name: str, symbol: str, length: int) -> dict:
+class Ship:
+    """Represents a ship in Battleships.
+
+    Each ship records information about the ship type, representation,
+    and number of hits.
+    """
+
+    def __init__(self, name: str, symbol: str, length: int):
+        self.name = name
+        self.symbol = symbol
+        self.length = length
+        self.hits = 0
+
+    def hit(self) -> None:
+        """Register a hit on the ship.
+
+        Arguments:
+            None
+
+        Returns:
+            None
+        """
+        self.hits += 1
+
+    def is_sunk(self) -> bool:
+        """Check if the ship is sunk by comparing its hit counter to its length.
+
+        Arguments:
+            ship: dict -- the ship to check
+
+        Returns:
+            True if the ship is sunk, False otherwise.
+        """
+        return self.hits >= self.length
+
+
+def create_ship(name: str, symbol: str, length: int) -> Ship:
     """Create a ship with the given name, symbol, and length.
 
     Arguments:
@@ -19,46 +55,40 @@ def create_ship(name: str, symbol: str, length: int) -> dict:
         length: int -- the number of grid spaces the ship occupies
 
     Returns:
-        A dictionary representing the ship, containing its name, symbol, and length.
-        Format:
-        {
-            'name': str,
-            'symbol': str,
-            'length': int,
-            'hits': int,  # A counter to track the number of hits the ship has taken
-        }
-    """
-    return {
-        'name': name,
-        'symbol': symbol,
-        'length': length,
-        'hits': 0,
-    }
+        A Ship instance
+       """
+    ship = Ship(name, symbol, length)
+    return ship
 
-
-def hit(ship: dict) -> None:
+def hit(ship: Ship) -> None:
     """Register a hit on the ship.
 
     Arguments:
-        ship: dict -- the ship to register the hit on
+        ship: Ship -- the ship to register the hit on
 
     Returns:
         None
     """
-    ship['hits'] += 1
+    ship.hits += 1
 
 
-def is_sunk(ship: dict) -> bool:
+def is_sunk(ship: Ship) -> bool:
     """Check if the ship is sunk by comparing its hit counter to its length.
 
     Arguments:
-        ship: dict -- the ship to check
+        ship: Ship --the ship to check
 
     Returns:
         True if the ship is sunk, False otherwise.
     """
-    return ship['hits'] >= ship['length']
+    return ship.hits >= ship.length
 
 
 if __name__ == "__main__":
-    pass
+    ship1 = Ship(
+        name="Battleship",
+        symbol="B",
+        length=4
+    )
+    ship1.hit()
+    print(ship1.hits)
