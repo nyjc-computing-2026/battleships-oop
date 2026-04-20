@@ -1,20 +1,7 @@
 """Game data: player
 
-A player is represented as a dictionary containing their name, ship
-board, attack board, and other relevant information.
-
-E.g. a player dictionary might look like:
-{
-    'name': 'Player 1',
-    # A grid representing the player's ships
-    'ship_board': [...],
-    # A grid representing the player's attacks on the opponent
-    'attack_board': [...],
-    # A dictionary to keep track of the player's ships and their lengths
-    'ships': {'B': 1, 'C': 1, 'D': 1},
-    # A counter to track the number of turns taken by the player
-    'turns_taken': 0,
-}
+Each player has two boards, and also tracks the status of their ships
+and the number of turns taken.
 """
 
 import grid
@@ -33,10 +20,10 @@ class Player:
     def __init__(
             self,
             name: str,
-            ship_board: list[list[str]],
-            attack_board: list[list[str]],
+            ship_board: grid.Grid,
+            attack_board: grid.Grid,
             ships: dict[str, ship.Ship],
-    ):
+    ) -> None:
         self.name = name
         self.ship_board = ship_board
         self.attack_board = attack_board
@@ -85,7 +72,7 @@ class Player:
         Returns:
             None
         """
-        self.attack_board[x][y] = symbol
+        self.attack_board.data[x][y] = symbol
 
     def update_defense(
             self,
@@ -109,9 +96,9 @@ class Player:
             None
         """
         if symbol == "~":
-            self.ship_board[x][y] = "O"  # Miss
+            self.ship_board.data[x][y] = "O"  # Miss
         else:
-            self.ship_board[x][y] = "X"  # Hit
+            self.ship_board.data[x][y] = "X"  # Hit
             if (
                     symbol in self.ships
                     and not self.ships[symbol].is_sunk()
@@ -121,9 +108,8 @@ class Player:
 
 def create_player(
         name: str,
-        ship_board: list[list[str]],  # grid
-        attack_board: list[list[str]],  # grid
-        ships: dict[str, ship.Ship],  # symbol: ship
+        ship_board: grid.Grid,  # grid
+        attack_board: grid.Grid,  # grid
         ships: dict[str, ship.Ship],  # symbol: ship
 ) -> Player:
     """Create a player with the given name and an empty grid.
@@ -131,9 +117,9 @@ def create_player(
     Arguments:
         name: str
             the name of the player
-        ship_board: list[list[str]]
+        ship_board: grid.Grid
             the player's ship board
-        attack_board: list[list[str]]
+        attack_board: grid.Grid
             the player's attack board
         ships: dict[str, Ship]
             a dictionary mapping ship symbols to their details
@@ -156,6 +142,8 @@ def create_player(
     """
     player = Player(name, ship_board, attack_board, ships)
     return player
+    p1 = Player(name, ship_board, attack_board, ships)
+    return p1
 
 
 def get_player_input(size: int) -> tuple[int, int]:
