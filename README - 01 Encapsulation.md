@@ -204,6 +204,7 @@ class Grid:
     """
 
     def __init__(self, size: int, placeholder: str):
+        self.size = size
         self._data = []
         for _ in range(n):
             row = [placeholder] * n
