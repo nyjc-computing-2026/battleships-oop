@@ -30,11 +30,18 @@ class Player:
     - attack board, containing the player's guesses and results
     - ships, containing ship status
     """
-    def __init__(self, name, ship_board, attack_board, ships):
+    def __init__(
+            self,
+            name: str,
+            ship_board: list[list[str]],
+            attack_board: list[list[str]],
+            ships: dict[str, ship.Ship],
+    ):
         self.name = name
         self.ship_board = ship_board
         self.attack_board = attack_board
         self.ships = ships
+        self.turns_taken = 0
 
     def has_player_lost(self, max_turns: int) -> bool:
         """Check if the player has lost the game.
@@ -97,14 +104,14 @@ class Player:
                     symbol in self.ships
                     and not self.ships[symbol].is_sunk()
             ):
-                defender_ship.hit()
+                self.ships[symbol].hit()
 
 
 def create_player(
         name: str,
         ship_board: list[list[str]],  # grid
         attack_board: list[list[str]],  # grid
-        ships: dict[str, dict],  # symbol: ship
+        ships: dict[str, ship.Ship],  # symbol: ship
 ) -> Player:
     """Create a player with the given name and an empty grid.
 
