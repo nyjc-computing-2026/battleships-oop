@@ -42,10 +42,11 @@ class Player:
         self.ship_board = ship_board
         self.attack_board = attack_board
         self.ships = ships
+        self.turns_taken = 0
 
     def get_player_input(self, size: int) -> tuple[int, int]:
         userinput = input("Enter row and column (e.g. '3 4'): ")
-        while not is_input_valid(userinput, self.size):
+        while not is_input_valid(userinput, size):
             print(
                 "Invalid input. Please enter row and column as two "
                 "integers separated by a space."
@@ -136,7 +137,7 @@ def create_player(
         name: str,
         ship_board: list[list[str]],  # grid
         attack_board: list[list[str]],  # grid
-        ships: dict[str, dict],  # symbol: ship
+        ships: dict[str, ship.Ship],  # symbol: ship
 ) -> Player:
     """Create a player with the given name and an empty grid.
 

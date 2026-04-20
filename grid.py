@@ -61,7 +61,7 @@ def get_grid_coordinate_char(grid: list[list[str]], x: int, y: int) -> str:
     return grid[x][y]
 
 
-def initialize_grid(grid: list[list[str]], ships: list[dict]) -> None:
+def initialize_grid(grid: list[list[str]], ships: list[ship.Ship]) -> None:
     """Initialize the grid by placing ships randomly on the grid.
 
     Arguments:
@@ -103,7 +103,7 @@ def is_valid_coordinate(grid: list[list[str]], x: int, y: int) -> bool:
 
 def place_ship_on_grid(
         grid: list[list[str]],
-        ship: dict,
+        ship: ship.Ship,
         x: int,
         y: int,
         orientation: str
