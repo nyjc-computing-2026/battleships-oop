@@ -30,30 +30,18 @@ class Player:
     - the player's attack board (containing attack guesses and results)
     - the player's ship status (number hits) 
     """
-
     def __init__(
             self,
             name: str,
-            ship_board: list[list[str]],  # grid
-            attack_board: list[list[str]],  # grid
-            ships: dict[str, ship.Ship],  # symbol: ship
+            ship_board: list[list[str]],
+            attack_board: list[list[str]],
+            ships: dict[str, ship.Ship],
     ):
         self.name = name
         self.ship_board = ship_board
         self.attack_board = attack_board
         self.ships = ships
         self.turns_taken = 0
-
-    def get_player_input(self, size: int) -> tuple[int, int]:
-        userinput = input("Enter row and column (e.g. '3 4'): ")
-        while not is_input_valid(userinput, size):
-            print(
-                "Invalid input. Please enter row and column as two "
-                "integers separated by a space."
-            )
-        userinput = input("Enter row and column (e.g. '3 4'): ")
-        row_str, col_str = userinput.split()
-        return int(row_str), int(col_str)
 
     def has_player_lost(self, max_turns: int) -> bool:
         """Check if the player has lost the game.
@@ -131,12 +119,11 @@ class Player:
                 self.ships[symbol].hit()
 
 
-
-
 def create_player(
         name: str,
         ship_board: list[list[str]],  # grid
         attack_board: list[list[str]],  # grid
+        ships: dict[str, ship.Ship],  # symbol: ship
         ships: dict[str, ship.Ship],  # symbol: ship
 ) -> Player:
     """Create a player with the given name and an empty grid.
