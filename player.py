@@ -50,6 +50,10 @@ class Player:
                 return False
         return True
 
+    def take_turn(self) -> None:
+        """Increment the player's turn count by one."""
+        self.turns_taken += 1
+
     def update_attack(self, x: int, y: int, symbol: str) -> None:
         """Update the attacker's attack board based on the result of an
         attack.
@@ -65,7 +69,7 @@ class Player:
         Returns:
             None
         """
-        self.attack_board.data[x][y] = symbol
+        self.attack_board.set(x, y, symbol)
 
     def update_defense(self, x: int, y: int, symbol: str) -> None:
         """Update the defender's ship board based on the result of an attack.
@@ -84,9 +88,9 @@ class Player:
             None
         """
         if symbol == "~":
-            self.ship_board.data[x][y] = "O"  # Miss
+            self.ship_board.set(x, y, "O")  # Miss
         else:
-            self.ship_board.data[x][y] = "X"  # Hit
+            self.ship_board.set(x, y, "X")  # Hit
             if (
                     symbol in self.ships
                     and not self.ships[symbol].is_sunk()

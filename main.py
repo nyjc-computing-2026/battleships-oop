@@ -47,8 +47,6 @@ def main() -> None:
         grid=human.ship_board,
         ships=list(human.ships.values()),
     )
-    human.turns_taken = 0
-    computer.turns_taken = 0
 
     # Game loop
     while (
@@ -61,7 +59,7 @@ def main() -> None:
         human.attack_board.display()
         row, col = player.get_player_input(grid_size)
         # Process human's attack on computer's grid
-        hit_char = grid.get_grid_coordinate_char(computer.ship_board, row, col)
+        hit_char = computer.ship_board.get(row, col)
         if hit_char in computer.ships:
             message = f"Hit! {human.name} hit {computer.name}'s {computer.ships[hit_char].name}!"
             human.update_attack(row, col, hit_char)
@@ -71,13 +69,13 @@ def main() -> None:
             human.update_attack(row, col, "O")
             computer.update_defense(row, col, "O")
         print(message)
-        human.turns_taken += 1
+        human.take_turn()
 
         # Computer's turn
         print(f"{computer.name}'s turn:")
         row, col = utility.generate_random_coordinate(computer.ship_board.size)
         # Process computer's attack on human's grid
-        hit_char = grid.get_grid_coordinate_char(human.ship_board, row, col)
+        hit_char = human.ship_board.get(row, col)
         if hit_char in human.ships:
             message = f"Hit! {computer.name} hit {human.name}'s {human.ships[hit_char].name}!"
             computer.update_attack(row, col, hit_char)
@@ -89,7 +87,7 @@ def main() -> None:
         # Show player's ship board after input
         human.ship_board.display()
         print(message)
-        computer.turns_taken += 1
+        computer.take_turn()
 
 
 if __name__ == "__main__":
