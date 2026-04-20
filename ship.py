@@ -55,30 +55,6 @@ def create_ship(name: str, symbol: str, length: int) -> Ship:
     return Ship(name, symbol, length)
 
 
-def hit(ship: Ship) -> None:
-    """Register a hit on the ship.
-
-    Arguments:
-        ship: Ship -- the ship to register the hit on
-
-    Returns:
-        None
-    """
-    ship.hits += 1
-
-
-def is_sunk(ship: Ship) -> bool:
-    """Check if the ship is sunk by comparing its hit counter to its length.
-
-    Arguments:
-        ship: Ship -- the ship to check
-
-    Returns:
-        True if the ship is sunk, False otherwise.
-    """
-    return ship.hits >= ship.length
-
-
 if __name__ == "__main__":
     ship1 = Ship(
         "Battleship",
