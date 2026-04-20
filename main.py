@@ -58,7 +58,7 @@ def main() -> None:
         # Player's turn
         print(f"{human.name}'s turn:")
         # Show player's board before input
-        grid.display_grid(human.attack_board)
+        human.attack_board.display()
         row, col = player.get_player_input(grid_size)
         # Process human's attack on computer's grid
         hit_char = grid.get_grid_coordinate_char(computer.ship_board, row, col)
@@ -75,7 +75,7 @@ def main() -> None:
 
         # Computer's turn
         print(f"{computer.name}'s turn:")
-        row, col = utility.generate_random_coordinate(len(computer.ship_board))
+        row, col = utility.generate_random_coordinate(computer.ship_board.size)
         # Process computer's attack on human's grid
         hit_char = grid.get_grid_coordinate_char(human.ship_board, row, col)
         if hit_char in human.ships:
@@ -87,7 +87,7 @@ def main() -> None:
             computer.update_attack(row, col, "O")
             human.update_defense(row, col, "O")
         # Show player's ship board after input
-        grid.display_grid(human.ship_board)
+        human.ship_board.display()
         print(message)
         computer.turns_taken += 1
 

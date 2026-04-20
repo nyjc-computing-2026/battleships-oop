@@ -17,7 +17,7 @@ class Ship:
     and number of hits.
     """
 
-    def __init__(self, name: str, symbol: str, length: int):
+    def __init__(self, name: str, symbol: str, length: int) -> None:
         self.name = name
         self.symbol = symbol
         self.length = length
