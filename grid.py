@@ -12,11 +12,13 @@ import ship
 import utility
 
 
-class AttackGrid:
-    """Represents an attack grid in Battleships.
+class Grid:
+    """Represents a 2D square grid in Battleships.
+    Parent class / superclass for AttackGrid and ShipGrid.
 
-    Each grid is a nested list (list of lists) where each inner list
-    represents a row of the grid.
+    Each grid stores data as a single-character string, accessed using
+    (x, y) coordinates, with x representing the horizontal coordinate
+    and y representing the vertical coordinate.
     """
 
     def __init__(self, size: int, placeholder: str) -> None:
@@ -80,72 +82,27 @@ class AttackGrid:
         return True
 
 
-class ShipGrid:
+class AttackGrid(Grid):
+    """Represents an attack grid in Battleships."""
+
+    def set(self, x: int, y: int, symbol: str) -> None:
+        """Set the character at the specified grid coordinates and update
+        ship status if it's a hit.
+
+        Validates that the symbol is a single-character string before
+        setting it on the grid.
+        """
+        super().set(x, y, symbol)
+        if len(symbol) != 1:
+            raise ValueError("Symbol must be a single-character string.")
+
+
+class ShipGrid(Grid):
     """Represents a ship grid in Battleships.
 
     Each grid is a nested list (list of lists) where each inner list
     represents a row of the grid.
     """
-
-    def __init__(self, size: int, placeholder: str) -> None:
-        self.size = size
-        self._data = []
-        for _ in range(size):
-            row = [placeholder] * size
-            self._data.append(row)
-
-    def get(self, x: int, y: int) -> str:
-        """Get the character at the specified grid coordinates.
-
-        Arguments:
-            x: int
-                the horizontal coordinate
-            y: int
-                the vertical coordinate
-    
-        Returns:
-            The character at the specified coordinates on the grid.
-        """
-        return self._data[y][x]
-
-    def set(self, x: int, y: int, symbol: str) -> None:
-        """Set the character at the specified grid coordinates.
-
-        Arguments:
-            x: int
-                the horizontal coordinate
-            y: int
-                the vertical coordinate
-            symbol: str
-                the character to set at the specified coordinates
-    
-        Returns:
-            None
-        """
-        if not symbol.upper():
-            raise ValueError
-        self._data[y][x] = symbol
-
-    def display(self) -> None:
-        """Display the grid in a readable format."""
-        for row in self._data:
-            print(" ".join(row))
-
-    def is_valid_coordinate(self, x: int, y: int) -> bool:
-        """Check if the given coordinates are valid for the grid.
-
-        Arguments:
-            x: int
-                the row index to validate
-            y: int
-                the column index to validate
-
-        Returns:
-            True if the coordinates are valid, False otherwise.
-        """
-        if x < 0 or x >= self.size or y < 0 or y >= self.size:
-            return False
-        return True
 
     def initialize_grid(self, ships: list[ship.Ship]) -> None:
         """Initialize the grid by placing ships randomly on the grid.
@@ -259,4 +216,4 @@ class ShipGrid:
 
 
 if __name__ == "__main__":
-    pass
+    g = AttackGrid(size=6, placeholder="~")
