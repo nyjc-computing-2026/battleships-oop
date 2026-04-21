@@ -56,8 +56,8 @@ class Grid:
         Returns:
             None
         """
-        if not symbol.upper():
-            raise ValueError
+        if len(symbol) != 1:
+            raise ValueError("Symbol must be a single-character string.")
         self._data[y][x] = symbol
 
     def display(self) -> None:
@@ -92,9 +92,9 @@ class AttackGrid(Grid):
         Validates that the symbol is a single-character string before
         setting it on the grid.
         """
+        if symbol.isalpha() and not symbol.isupper():
+            raise ValueError("Letter must be uppercase.")
         super().set(x, y, symbol)
-        if len(symbol) != 1:
-            raise ValueError("Symbol must be a single-character string.")
 
 
 class ShipGrid(Grid):
