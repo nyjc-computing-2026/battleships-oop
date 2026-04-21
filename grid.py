@@ -80,64 +80,93 @@ class Grid:
         return True
 
 
-def create_grid(n: int, placeholder: str) -> Grid:
-    """Create a n-by-n grid.
-    The grid is represented as a list of lists.
-    Each inner list represents a row.
-    Each row is filled with the placeholder character.
+class ShipGrid:
+    """Represents the ship grid in Battleships."""
 
-    Arguments:
-        n: int
-            the size of the grid (n x n)
-        placeholder: str
-            the character to fill the grid with
+    def __init__(self, size: int, placeholder: str) -> None:
+        # Ideally should protect with getter/setter methods to prevent
+        # inadvertent modification
+        self.size = size
+        self._data = []
+        for _ in range(size):
+            row = [placeholder] * size
+            self._data.append(row)
 
-    Returns:
-        A nested list representing the grid.
-    """
-    return Grid(n, placeholder)
+    def display(self) -> None:
+        """Display the grid in a readable format."""
+        for row in self._data:
+            print(" ".join(row))
 
+    def get(self, x: int, y: int) -> str:
+        """Get the character at the specified grid coordinates.
 
-def get_grid_coordinate_char(grid: Grid, x: int, y: int) -> str:
-    """Get the character at the specified grid coordinates.
+        Arguments:
+            x: int
+                the horizontal coordinate
+            y: int
+                the vertical coordinate
+        
+        Returns:
+            The character at the specified coordinates on the grid.
+        """
+        return self._data[y][x]
 
-    Arguments:
-        grid: Grid
-        x: int
-            the horizontal coordinate
-        y: int
-            the vertical coordinate
-    
-    Returns:
-        The character at the specified coordinates on the grid.
-    """
-    return grid.get(x, y)
+    def set(self, x: int, y: int, value: str) -> None:
+        """Set the character at the specified grid coordinates.
 
+        Arguments:
+            x: int
+                the horizontal coordinate
+            y: int
+                the vertical coordinate
+            value: str
+                the character to set at the specified coordinates
+        
+        Returns:
+            None
+        """
+        self._data[y][x] = value
 
-def initialize_grid(grid: Grid, ships: list[ship.Ship]) -> None:
-    """Initialize the grid by placing ships randomly on the grid.
+    def is_valid_coordinate(self, x: int, y: int) -> bool:
+        """Check if the given coordinates are valid for the grid.
 
-    Arguments:
-        grid: Grid
-            the game grid to initialize
-        ships: list[dict]
-            a list of ships to place on the grid
-    
-    Returns:
-        None
-    """
-    for ship in ships:
-        x, y = utility.generate_random_coordinate(grid.size)
-        orientation = utility.generate_random_orientation()
-        # Keep trying to place the ship until it is successfully placed
-        # on the grid
-        while not place_ship_on_grid(grid, ship, x, y, orientation):
-            x, y = utility.generate_random_coordinate(grid.size)
+        Arguments:
+            x: int
+                the row index to validate
+            y: int
+                the column index to validate
+
+        Returns:
+            True if the coordinates are valid, False otherwise.
+        """
+        if x < 0 or x >= self.size or y < 0 or y >= self.size:
+            return False
+        return True
+
+    def initialize(self, ships: list[ship.Ship]) -> None:
+        """Initialize the grid by placing ships randomly on the grid.
+
+        Arguments:
+            grid: ShipGrid
+                the game grid to initialize
+            ships: list[dict]
+                a list of ships to place on the grid
+        
+        Returns:
+            None
+        """
+        for ship in ships:
+            x, y = utility.generate_random_coordinate(self.size)
             orientation = utility.generate_random_orientation()
+            # Keep trying to place the ship until it is successfully placed
+            # on the grid
+            while not place_ship_on_grid(self, ship, x, y, orientation):
+                x, y = utility.generate_random_coordinate(self.size)
+                orientation = utility.generate_random_orientation()
 
 
 def place_ship_on_grid(
-        grid: Grid,
+        grid: ShipGrid,
         ship: ship.Ship,
         x: int,
         y: int,
@@ -168,7 +197,7 @@ def place_ship_on_grid(
 
 
 def place_ship_on_grid_horizontally(
-        grid: Grid,
+        grid: ShipGrid,
         ship: ship.Ship,
         x: int,
         y: int,
@@ -177,7 +206,7 @@ def place_ship_on_grid_horizontally(
     horizontally (rightwards).
 
     Arguments:
-        grid: Grid -- the game grid
+        grid: ShipGrid -- the ship grid
         ship: Ship -- the ship to place on the grid
         x: int -- the row index for the starting coordinate
         y: int -- the column index for the starting coordinate
@@ -195,7 +224,7 @@ def place_ship_on_grid_horizontally(
 
 
 def place_ship_on_grid_vertically(
-        grid: Grid,
+        grid: ShipGrid,
         ship: ship.Ship,
         x: int,
         y: int,
@@ -204,7 +233,7 @@ def place_ship_on_grid_vertically(
     (downwards).
 
     Arguments:
-        grid: list[list[str]] -- the game grid
+        grid: ShipGrid -- the ship grid
         ship: Ship -- the ship to place on the grid
         x: int -- the row index for the starting coordinate
         y: int -- the column index for the starting coordinate
@@ -220,7 +249,7 @@ def place_ship_on_grid_vertically(
         ):
             return False
     for i in range(ship.length):
-        grid.set(x + i, y, ship.symbol)
+        grid.set(x, y + i, ship.symbol)
     return True
 
 
