@@ -72,7 +72,7 @@ class Player:
         Returns:
             None
         """
-        self.attack_board.data[x][y] = symbol
+        self.attack_board.set(x, y, symbol)
 
     def update_defense(
             self,
@@ -96,9 +96,9 @@ class Player:
             None
         """
         if symbol == "~":
-            self.ship_board.data[x][y] = "O"  # Miss
+            self.ship_board.set(x, y, "O")  # Miss
         else:
-            self.ship_board.data[x][y] = "X"  # Hit
+            self.ship_board.set(x, y, "X")  # Hit
             if (
                     symbol in self.ships
                     and not self.ships[symbol].is_sunk()
@@ -156,15 +156,15 @@ def get_player_input(size: int) -> tuple[int, int]:
             the size of the grid (n x n)
 
     Returns:
-        A tuple containing the row and column indices as integers.
+        A tuple containing the x and y coordinates as integers.
     """
-    userinput = input("Enter row and column (e.g. '3 4'): ")
+    userinput = input("Enter x and y coordinates (e.g. '3 4'): ")
     while not is_input_valid(userinput, size):
         print(
-            "Invalid input. Please enter row and column as two "
+            "Invalid input. Please enter x and y coordinates as two "
             "integers separated by a space."
         )
-        userinput = input("Enter row and column (e.g. '3 4'): ")
+        userinput = input("Enter x and y coordinates (e.g. '3 4'): ")
     row_str, col_str = userinput.split()
     return int(row_str), int(col_str)
 
