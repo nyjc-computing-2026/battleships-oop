@@ -53,9 +53,9 @@ def main() -> None:
             not attacker.has_lost(max_turns)
             and not defender.has_lost(max_turns)
     ):
-        # Player's turn
+        # Attacker's turn
         print(f"{attacker.name}'s turn:")
-        # Show player's board before input
+        # Show human's board before input
         if isinstance(attacker, player.Human):
             attacker.attack_board.display()
         x, y = attacker.get_input()
@@ -69,7 +69,7 @@ def main() -> None:
             message = f"{attacker.name} missed!"
             attacker.update_attack(x, y, "O")
             attacker.update_defense(x, y, "O")
-        # Show player's ship board after input
+        # Show human's ship board after input
         if isinstance(attacker, player.Human):
             attacker.ship_board.display()
         print(message)

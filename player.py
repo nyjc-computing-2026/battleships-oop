@@ -22,8 +22,8 @@ import ship
 import utility
 
 
-class Human:
-    """Class representing a human player in the Battleship game."""
+class Player:
+    """Base class for all player types in the Battleship game."""
 
     def __init__(
             self,
@@ -108,6 +108,10 @@ class Human:
             if not player_ship.is_sunk():
                 return False
         return True
+
+
+class Human(Player):
+    """Class representing a human player in the Battleship game."""
 
     def get_input(self) -> tuple[int, int]:
         """Get the player's input for row and column.
@@ -157,92 +161,8 @@ class Human:
         return True
 
 
-class Computer:
+class Computer(Player):
     """Class representing a computer player in the Battleship game."""
-
-    def __init__(
-            self,
-            name: str,
-            ship_board: grid.ShipGrid,
-            attack_board: grid.AttackGrid,
-            ships: dict[str, ship.Ship],
-    ):
-        self.name = name
-        self.ship_board = ship_board
-        self.attack_board = attack_board
-        self.ships = ships
-        self.turns_taken = 0
-
-    def take_turn(self) -> None:
-        """Take a single turn.
-
-        Returns:
-            None
-        """
-        self.turns_taken += 1
-
-    def update_attack(self, x: int, y: int, symbol: str) -> None:
-        """Update the attacker's attack board based on the result of an
-        attack.
-
-        Arguments:
-            x: int
-                the horizontal coordinate of the attack
-            y: int
-                the vertical coordinate of the attack
-            symbol: str
-                the symbol to represent the attack result on the board
-
-        Returns:
-            None
-        """
-        self.attack_board.set(x, y, symbol)
-
-    def update_defense(self, x: int, y: int, symbol: str) -> None:
-        """Update the defender's ship board based on the result of an attack.
-
-        Arguments:
-            self: Player
-                the player whose ship board is to be updated
-            x: int
-                the horizontal coordinate of the attack
-            y: int
-                the vertical coordinate of the attack
-            symbol: str
-                the symbol to represent the attack result on the board
-
-        Returns:
-            None
-        """
-        if symbol == "~":
-            self.ship_board.set(x, y, "O")  # Miss
-        else:
-            self.ship_board.set(x, y, "X")  # Hit
-            if (
-                    symbol in self.ships
-                    and not self.ships[symbol].is_sunk()
-            ):
-                self.ships[symbol].hit()
-
-    def has_lost(self, max_turns: int) -> bool:
-        """Check if the player has lost the game.
-        A player loses when:
-        - all of their ships have been sunk.
-        - they have exceeded the maximum number of turns.
-
-        Arguments:
-            max_turns: int
-                the maximum number of turns allowed for the player
-
-        Returns:
-            True if the player has lost, False otherwise.
-        """
-        if self.turns_taken >= max_turns:
-            return True
-        for player_ship in self.ships.values():
-            if not player_ship.is_sunk():
-                return False
-        return True
 
     def get_input(self) -> tuple[int, int]:
         """Generate random coordinates for the computer's attack."""
