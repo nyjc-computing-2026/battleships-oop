@@ -17,7 +17,7 @@ def main() -> None:
     """Main function to run the Battleship game."""
     grid_size = 10
     max_turns = 30
-    computer = player.create_player(
+    computer = player.Player(
         name="Computer",
         ship_board=grid.create_grid(n=grid_size, placeholder="~"),
         attack_board=grid.create_grid(n=grid_size, placeholder="~"),
@@ -27,7 +27,7 @@ def main() -> None:
             "D": ship.create_ship(name="Destroyer", symbol="D", length=2)
         }
     )
-    human = player.create_player(
+    human = player.Player(
         name="Player",
         ship_board=grid.create_grid(n=grid_size, placeholder="~"),
         attack_board=grid.create_grid(n=grid_size, placeholder="~"),
@@ -40,15 +40,13 @@ def main() -> None:
 
     # Game setup: populate ship boards and initialize attack boards
     grid.initialize_grid(
-        grid=computer["ship_board"],
-        ships=computer["ships"].values(),
+        grid=computer.ship_board,
+        ships=list(computer.ships.values()),
     )
     grid.initialize_grid(
-        grid=human["ship_board"],
-        ships=human["ships"].values(),
+        grid=human.ship_board,
+        ships=list(human.ships.values()),
     )
-    human["turns_taken"] = 0
-    computer["turns_taken"] = 0
 
     # Game loop
     while (
@@ -56,40 +54,40 @@ def main() -> None:
             and not player.has_player_lost(computer, max_turns)
     ):
         # Player's turn
-        print(f"{human['name']}'s turn:")
+        print(f"{human.name}'s turn:")
         # Show player's board before input
-        grid.display_grid(human['attack_board'])
+        grid.display_grid(human.attack_board)
         row, col = player.get_player_input(grid_size)
         # Process human's attack on computer's grid
-        hit_char = grid.get_grid_coordinate_char(computer['ship_board'], row, col)
-        if hit_char in computer["ships"]:
-            message = f"Hit! {human['name']} hit {computer['name']}'s {computer['ships'][hit_char]['name']}!"
+        hit_char = grid.get_grid_coordinate_char(computer.ship_board, row, col)
+        if hit_char in computer.ships:
+            message = f"Hit! {human.name} hit {computer.name}'s {computer.ships[hit_char].name}!"
             player.update_attack(human, row, col, hit_char)
             player.update_defense(computer, row, col, hit_char)
         else:
-            message = f"{human['name']} missed!"
+            message = f"{human.name} missed!"
             player.update_attack(human, row, col, "O")
             player.update_defense(computer, row, col, "O")
         print(message)
-        human["turns_taken"] += 1
+        human.turns_taken += 1
 
         # Computer's turn
-        print(f"{computer['name']}'s turn:")
-        row, col = utility.generate_random_coordinate(len(computer['ship_board']))
+        print(f"{computer.name}'s turn:")
+        row, col = utility.generate_random_coordinate(len(computer.ship_board.data))
         # Process computer's attack on human's grid
-        hit_char = grid.get_grid_coordinate_char(human['ship_board'], row, col)
-        if hit_char in human["ships"]:
-            message = f"Hit! {computer['name']} hit {human['name']}'s {human['ships'][hit_char]['name']}!"
+        hit_char = grid.get_grid_coordinate_char(human.ship_board, row, col)
+        if hit_char in human.ships:
+            message = f"Hit! {computer.name} hit {human.name}'s {human.ships[hit_char].name}!"
             player.update_attack(computer, row, col, hit_char)
             player.update_defense(human, row, col, hit_char)
         else:
-            message = f"{computer['name']} missed!"
+            message = f"{computer.name} missed!"
             player.update_attack(computer, row, col, "O")
             player.update_defense(human, row, col, "O")
         # Show player's ship board after input
-        grid.display_grid(human['ship_board'])
+        grid.display_grid(human.ship_board)
         print(message)
-        computer["turns_taken"] += 1
+        computer.turns_taken += 1
 
 
 if __name__ == "__main__":

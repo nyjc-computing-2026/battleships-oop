@@ -17,7 +17,18 @@ import ship
 import utility
 
 
-def create_grid(n: int, placeholder: str) -> list[list[str]]:
+class Grid:
+    """Class representing a grid in the Battleship game."""
+    def __init__(self, size: int, placeholder: str):
+        self.size = size
+        self.placeholder = placeholder
+        self.data = []
+        for _ in range(size):
+            row = [placeholder] * size
+            self.data.append(row)
+
+
+def create_grid(n: int, placeholder: str) -> Grid:
     """Create a n-by-n grid.
     The grid is represented as a list of lists.
     Each inner list represents a row.
@@ -32,20 +43,16 @@ def create_grid(n: int, placeholder: str) -> list[list[str]]:
     Returns:
         A nested list representing the grid.
     """
-    grid = []
-    for _ in range(n):
-        row = [placeholder] * n
-        grid.append(row)
-    return grid
+    return Grid(n, placeholder)
 
 
-def display_grid(grid: list[list[str]]) -> None:
+def display_grid(grid: Grid) -> None:
     """Display the grid in a readable format."""
-    for row in grid:
+    for row in grid.data:
         print(" ".join(row))
 
 
-def get_grid_coordinate_char(grid: list[list[str]], x: int, y: int) -> str:
+def get_grid_coordinate_char(grid: Grid, x: int, y: int) -> str:
     """Get the character at the specified grid coordinates.
 
     Arguments:
@@ -58,10 +65,10 @@ def get_grid_coordinate_char(grid: list[list[str]], x: int, y: int) -> str:
     Returns:
         The character at the specified coordinates on the grid.
     """
-    return grid[x][y]
+    return grid.data[x][y]
 
 
-def initialize_grid(grid: list[list[str]], ships: list[dict]) -> None:
+def initialize_grid(grid: Grid, ships: list[ship.Ship]) -> None:
     """Initialize the grid by placing ships randomly on the grid.
 
     Arguments:
@@ -74,20 +81,20 @@ def initialize_grid(grid: list[list[str]], ships: list[dict]) -> None:
         None
     """
     for ship in ships:
-        x, y = utility.generate_random_coordinate(len(grid))
+        x, y = utility.generate_random_coordinate(grid.size)
         orientation = utility.generate_random_orientation()
         # Keep trying to place the ship until it is successfully placed
         # on the grid
         while not place_ship_on_grid(grid, ship, x, y, orientation):
-            x, y = utility.generate_random_coordinate(len(grid))
+            x, y = utility.generate_random_coordinate(grid.size)
             orientation = utility.generate_random_orientation()
 
 
-def is_valid_coordinate(grid: list[list[str]], x: int, y: int) -> bool:
+def is_valid_coordinate(grid: Grid, x: int, y: int) -> bool:
     """Check if the given coordinates are valid for the grid.
 
     Arguments:
-        grid: list[list[str]]
+        grid: Grid
         x: int
             the row index to validate
         y: int
@@ -96,14 +103,14 @@ def is_valid_coordinate(grid: list[list[str]], x: int, y: int) -> bool:
     Returns:
         True if the coordinates are valid, False otherwise.
     """
-    if x < 0 or x >= len(grid) or y < 0 or y >= len(grid):
+    if x < 0 or x >= grid.size or y < 0 or y >= grid.size:
         return False
     return True
 
 
 def place_ship_on_grid(
-        grid: list[list[str]],
-        ship: dict,
+        grid: Grid,
+        ship: ship.Ship,
         x: int,
         y: int,
         orientation: str
@@ -111,8 +118,8 @@ def place_ship_on_grid(
     """Place a ship on the grid at the specified coordinates.
 
     Arguments:
-        grid: list[list[str]] -- the game grid
-        ship: dict -- the ship to place on the grid
+        grid: Grid -- the game grid
+        ship: Ship -- the ship to place on the grid
         x: int -- the row index for the starting coordinate
         y: int -- the column index for the starting coordinate
         orientation: str -- the orientation of the ship ('horizontal' or
@@ -133,8 +140,8 @@ def place_ship_on_grid(
 
 
 def place_ship_on_grid_horizontally(
-        grid: list[list[str]],
-        ship: dict,
+        grid: Grid,
+        ship: ship.Ship,
         x: int,
         y: int,
 ) -> bool:
@@ -151,17 +158,17 @@ def place_ship_on_grid_horizontally(
         True if the ship was successfully placed, False if placement
         failed due to out-of-bounds or overlap with existing ships.
     """
-    for i in range(ship['length']):
-        if not is_valid_coordinate(grid, x, y + i) or grid[x][y + i] != '~':
+    for i in range(ship.length):
+        if not is_valid_coordinate(grid, x, y + i) or grid.data[x][y + i] != '~':
             return False
-    for i in range(ship['length']):
-        grid[x][y + i] = ship['symbol']
+    for i in range(ship.length):
+        grid.data[x][y + i] = ship.symbol
     return True
 
 
 def place_ship_on_grid_vertically(
-        grid: list[list[str]],
-        ship: dict,
+        grid: Grid,
+        ship: ship.Ship,
         x: int,
         y: int,
 ) -> bool:
@@ -178,14 +185,14 @@ def place_ship_on_grid_vertically(
         True if the ship was successfully placed, False if placement
         failed due to out-of-bounds or overlap with existing ships.
     """
-    for i in range(ship['length']):
+    for i in range(ship.length):
         if (
                 not is_valid_coordinate(grid, x + i, y)
-                or grid[x + i][y] != '~'
+                or grid.data[x + i][y] != '~'
         ):
             return False
-    for i in range(ship['length']):
-        grid[x + i][y] = ship['symbol']
+    for i in range(ship.length):
+        grid.data[x + i][y] = ship.symbol
     return True
 
 
