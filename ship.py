@@ -19,20 +19,6 @@ class Ship:
         self.hits = 0  # A counter to track the number of hits the ship has taken
 
 
-def create_ship(name: str, symbol: str, length: int) -> Ship:
-    """Create a ship with the given name, symbol, and length.
-
-    Arguments:
-        name: str -- the name of the ship
-        symbol: str -- the character to represent the ship on the grid
-        length: int -- the number of grid spaces the ship occupies
-
-    Returns:
-        A Ship object representing the ship.
-    """
-    return Ship(name, symbol, length)
-
-
 def hit(ship: Ship) -> None:
     """Register a hit on the ship.
 
