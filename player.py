@@ -172,6 +172,14 @@ class Computer:
         self.ships = ships
         self.turns_taken = 0
 
+    def take_turn(self) -> None:
+        """Take a single turn.
+
+        Returns:
+            None
+        """
+        self.turns_taken += 1
+
     def update_attack(self, x: int, y: int, symbol: str) -> None:
         """Update the attacker's attack board based on the result of an
         attack.
