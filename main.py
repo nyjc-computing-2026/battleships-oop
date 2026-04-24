@@ -3,7 +3,6 @@
 import grid
 import player
 import ship
-import utility
 
 # Game data (global)
 # This section defines the global data used in the game
@@ -48,45 +47,41 @@ def main() -> None:
     )
 
     # Game loop
+    attacker = human
+    defender = computer
     while (
-            not human.has_lost(max_turns)
-            and not computer.has_lost(max_turns)
+            not attacker.has_lost(max_turns)
+            and not defender.has_lost(max_turns)
     ):
         # Player's turn
-        print(f"{human.name}'s turn:")
+        print(f"{attacker.name}'s turn:")
         # Show player's board before input
-        human.attack_board.display()
-        x, y = human.get_input()
-        # Process human's attack on computer's grid
-        hit_char = computer.ship_board.get(x, y)
-        if hit_char in computer.ships:
-            message = f"Hit! {human.name} hit {computer.name}'s {computer.ships[hit_char].name}!"
-            human.update_attack(x, y, hit_char)
-            human.update_defense(x, y, hit_char)
+        if isinstance(attacker, player.Human):
+            attacker.attack_board.display()
+        x, y = attacker.get_input()
+        # Process attacker's attack on defender's grid
+        hit_char = defender.ship_board.get(x, y)
+        if hit_char in defender.ships:
+            message = f"Hit! {attacker.name} hit {defender.name}'s {defender.ships[hit_char].name}!"
+            attacker.update_attack(x, y, hit_char)
+            attacker.update_defense(x, y, hit_char)
         else:
-            message = f"{human.name} missed!"
-            human.update_attack(x, y, "O")
-            human.update_defense(x, y, "O")
-        print(message)
-        human.take_turn()
-
-        # Computer's turn
-        print(f"{computer.name}'s turn:")
-        x, y = utility.generate_random_coordinate(len(computer.ship_board.data))
-        # Process computer's attack on human's grid
-        hit_char = computer.ship_board.get(x, y)
-        if hit_char in human.ships:
-            message = f"Hit! {computer.name} hit {human.name}'s {human.ships[hit_char].name}!"
-            computer.update_attack(x, y, hit_char)
-            computer.update_defense(x, y, hit_char)
-        else:
-            message = f"{computer.name} missed!"
-            computer.update_attack(x, y, "O")
-            computer.update_defense(x, y, "O")
+            message = f"{attacker.name} missed!"
+            attacker.update_attack(x, y, "O")
+            attacker.update_defense(x, y, "O")
         # Show player's ship board after input
-        computer.ship_board.display()
+        if isinstance(attacker, player.Human):
+            attacker.ship_board.display()
         print(message)
-        computer.take_turn()
+        attacker.take_turn()
+        # Switch turns
+        attacker, defender = defender, attacker
+
+    # Game over
+    if attacker.has_lost(max_turns):
+        print(f"{attacker.name} has lost! {defender.name} wins!")
+    else:
+        print(f"{defender.name} has lost! {attacker.name} wins!")
 
 
 if __name__ == "__main__":

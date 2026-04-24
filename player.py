@@ -19,10 +19,12 @@ E.g. a player dictionary might look like:
 
 import grid
 import ship
+import utility
 
 
 class Human:
     """Class representing a human player in the Battleship game."""
+
     def __init__(
             self,
             name: str,
@@ -60,7 +62,6 @@ class Human:
             None
         """
         self.attack_board.set(x, y, symbol)
-
 
     def update_defense(self, x: int, y: int, symbol: str) -> None:
         """Update the defender's ship board based on the result of an attack.
@@ -242,6 +243,10 @@ class Computer:
             if not player_ship.is_sunk():
                 return False
         return True
+
+    def get_input(self) -> tuple[int, int]:
+        """Generate random coordinates for the computer's attack."""
+        return utility.generate_random_coordinate(len(self.ship_board.data))
 
 
 if __name__ == "__main__":
