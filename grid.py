@@ -19,6 +19,7 @@ import utility
 
 class Grid:
     """Class representing a grid in the Battleship game."""
+
     def __init__(self, size: int, placeholder: str):
         self.size = size
         self.placeholder = placeholder
@@ -27,11 +28,40 @@ class Grid:
             row = [placeholder] * size
             self.data.append(row)
 
+    def get(self, x: int, y: int) -> str:
+        """Get the character at the specified grid coordinates.
 
-def display_grid(grid: Grid) -> None:
-    """Display the grid in a readable format."""
-    for row in grid.data:
-        print(" ".join(row))
+        Arguments:
+            x: int
+                the horizontal coordinate
+            y: int
+                the vertical coordinate
+        
+        Returns:
+            The character at the specified coordinates on the grid.
+        """
+        return self.data[y][x]
+
+    def set(self, x: int, y: int, value: str) -> None:
+        """Set the character at the specified grid coordinates.
+
+        Arguments:
+            x: int
+                the horizontal coordinate
+            y: int
+                the vertical coordinate
+            value: str
+                the character to set at the specified coordinates
+        
+        Returns:
+            None
+        """
+        self.data[y][x] = value
+
+    def display(self) -> None:
+        """Display the grid in a readable format."""
+        for row in self.data:
+            print(" ".join(row))
 
 
 def get_grid_coordinate_char(grid: Grid, x: int, y: int) -> str:
