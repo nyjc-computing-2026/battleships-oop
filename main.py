@@ -69,7 +69,7 @@ def main() -> None:
             human.update_attack(x, y, "O")
             human.update_defense(x, y, "O")
         print(message)
-        human.turns_taken += 1
+        human.take_turn()
 
         # Computer's turn
         print(f"{computer.name}'s turn:")
@@ -87,7 +87,7 @@ def main() -> None:
         # Show player's ship board after input
         computer.ship_board.display()
         print(message)
-        computer.turns_taken += 1
+        computer.take_turn()
 
 
 if __name__ == "__main__":
