@@ -17,8 +17,8 @@ import ship
 import utility
 
 
-class AttackGrid:
-    """Class representing an attack grid in the Battleship game."""
+class Grid:
+    """Base class for all grid types in the Battleship game."""
 
     def __init__(self, size: int, placeholder: str):
         self.size = size
@@ -80,7 +80,11 @@ class AttackGrid:
         return True
 
 
-class ShipGrid:
+class AttackGrid(Grid):
+    """Class representing an attack grid in the Battleship game."""
+
+
+class ShipGrid(Grid):
     """Class representing a ship grid in the Battleship game."""
 
     def __init__(self, size: int, placeholder: str):
