@@ -21,7 +21,7 @@ def main() -> None:
     computer = player.Computer(
         name="Computer",
         ship_board=grid.ShipGrid(size=grid_size, placeholder="~"),
-        attack_board=grid.Grid(size=grid_size, placeholder="~"),
+        attack_board=grid.AttackGrid(size=grid_size, placeholder="~"),
         ships={
             "B": ship.create_ship(name="Battleship", symbol="B", length=4),
             "C": ship.create_ship(name="Cruiser", symbol="C", length=3),
@@ -31,7 +31,7 @@ def main() -> None:
     human = player.Human(
         name="Player",
         ship_board=grid.ShipGrid(size=grid_size, placeholder="~"),
-        attack_board=grid.Grid(size=grid_size, placeholder="~"),
+        attack_board=grid.AttackGrid(size=grid_size, placeholder="~"),
         ships={
             "B": ship.create_ship(name="Battleship", symbol="B", length=4),
             "C": ship.create_ship(name="Cruiser", symbol="C", length=3),

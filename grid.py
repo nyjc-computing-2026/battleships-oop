@@ -41,12 +41,12 @@ class Grid:
                 the horizontal coordinate
             y: int
                 the vertical coordinate
-        
+
         Returns:
             The character at the specified coordinates on the grid.
         """
         return self._data[y][x]
-    
+
     def set(self, x: int, y: int, value: str) -> None:
         """Set the character at the specified grid coordinates.
 
@@ -57,7 +57,7 @@ class Grid:
                 the vertical coordinate
             value: str
                 the character to set at the specified coordinates
-        
+
         Returns:
             None
         """
@@ -80,68 +80,12 @@ class Grid:
         return True
 
 
-class ShipGrid:
+class AttackGrid(Grid):
+    """Represents the player's attack grid in Battleships."""
+
+
+class ShipGrid(Grid):
     """Represents the ship grid in Battleships."""
-
-    def __init__(self, size: int, placeholder: str) -> None:
-        # Ideally should protect with getter/setter methods to prevent
-        # inadvertent modification
-        self.size = size
-        self._data = []
-        for _ in range(size):
-            row = [placeholder] * size
-            self._data.append(row)
-
-    def display(self) -> None:
-        """Display the grid in a readable format."""
-        for row in self._data:
-            print(" ".join(row))
-
-    def get(self, x: int, y: int) -> str:
-        """Get the character at the specified grid coordinates.
-
-        Arguments:
-            x: int
-                the horizontal coordinate
-            y: int
-                the vertical coordinate
-        
-        Returns:
-            The character at the specified coordinates on the grid.
-        """
-        return self._data[y][x]
-
-    def set(self, x: int, y: int, value: str) -> None:
-        """Set the character at the specified grid coordinates.
-
-        Arguments:
-            x: int
-                the horizontal coordinate
-            y: int
-                the vertical coordinate
-            value: str
-                the character to set at the specified coordinates
-        
-        Returns:
-            None
-        """
-        self._data[y][x] = value
-
-    def is_valid_coordinate(self, x: int, y: int) -> bool:
-        """Check if the given coordinates are valid for the grid.
-
-        Arguments:
-            x: int
-                the row index to validate
-            y: int
-                the column index to validate
-
-        Returns:
-            True if the coordinates are valid, False otherwise.
-        """
-        if x < 0 or x >= self.size or y < 0 or y >= self.size:
-            return False
-        return True
 
     def initialize(self, ships: list[ship.Ship]) -> None:
         """Initialize the grid by placing ships randomly on the grid.
@@ -151,7 +95,7 @@ class ShipGrid:
                 the game grid to initialize
             ships: list[dict]
                 a list of ships to place on the grid
-        
+
         Returns:
             None
         """
@@ -181,7 +125,7 @@ def place_ship_on_grid(
         y: int -- the column index for the starting coordinate
         orientation: str -- the orientation of the ship ('horizontal' or
             'vertical')
-    
+
     Returns:
         True if the ship was successfully placed, False if placement
         failed due to out-of-bounds or overlap with existing ships.
@@ -210,7 +154,7 @@ def place_ship_on_grid_horizontally(
         ship: Ship -- the ship to place on the grid
         x: int -- the row index for the starting coordinate
         y: int -- the column index for the starting coordinate
-    
+
     Returns:
         True if the ship was successfully placed, False if placement
         failed due to out-of-bounds or overlap with existing ships.
@@ -237,7 +181,7 @@ def place_ship_on_grid_vertically(
         ship: Ship -- the ship to place on the grid
         x: int -- the row index for the starting coordinate
         y: int -- the column index for the starting coordinate
-    
+
     Returns:
         True if the ship was successfully placed, False if placement
         failed due to out-of-bounds or overlap with existing ships.
