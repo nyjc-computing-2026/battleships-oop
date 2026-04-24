@@ -21,43 +21,51 @@ import grid
 import ship
 
 
+class Player:
+    """Class representing a player in the Battleship game."""
+    def __init__(
+            self,
+            name: str,
+            ship_board: grid.Grid,
+            attack_board: grid.Grid,
+            ships: dict[str, ship.Ship],
+    ):
+        self.name = name
+        self.ship_board = ship_board
+        self.attack_board = attack_board
+        self.ships = ships
+        self.turns_taken = 0
+
+
 def create_player(
         name: str,
-        ship_board: list[list[str]],  # grid
-        attack_board: list[list[str]],  # grid
-        ships: dict[str, dict],  # symbol: ship
-) -> dict:
+        ship_board: grid.Grid,  # grid
+        attack_board: grid.Grid,  # grid
+        ships: dict[str, ship.Ship],  # symbol: ship
+) -> Player:
     """Create a player with the given name and an empty grid.
 
     Arguments:
         name: str
             the name of the player
-        ship_board: list[list[str]]
+        ship_board: grid.Grid
             the player's ship board
-        attack_board: list[list[str]]
+        attack_board: grid.Grid
             the player's attack board
-        ships: dict[str, dict]
+        ships: dict[str, ship.Ship]
             a dictionary mapping ship symbols to their details
 
     Returns:
-        A dictionary representing the player, containing their name and
-        grid.
-        Format:
-        {
-            'name': str,
-            'ship_board': list[list[str]],
-            'attack_board': list[list[str]],
-            'ships': dict[str, dict],
-            'turns_taken': int,
-        }
+        A Player object representing the player, containing their name and
+        grids.
     """
-    return {
-        'name': name,
-        'ship_board': ship_board,
-        'attack_board': attack_board,
-        'ships': ships,
-        'turns_taken': 0,
-    }
+    return Player(
+        name=name,
+        ship_board=ship_board,
+        attack_board=attack_board,
+        ships=ships
+    )
+
 
 
 def get_player_input(size: int) -> tuple[int, int]:
@@ -108,7 +116,7 @@ def is_input_valid(input_str: str, size: int) -> bool:
 
 
 def update_attack(
-        attacker: dict,  # player
+        attacker: Player,
         x: int,
         y: int,
         symbol: str
@@ -117,7 +125,7 @@ def update_attack(
     attack.
 
     Arguments:
-        attacker: dict
+        attacker: Player
             the player whose attack board is to be updated
         x: int
             the horizontal coordinate of the attack
@@ -129,11 +137,11 @@ def update_attack(
     Returns:
         None
     """
-    attacker['attack_board'][x][y] = symbol
+    attacker.attack_board.data[x][y] = symbol
 
 
 def update_defense(
-        defender: dict,  # player
+        defender: Player,
         x: int,
         y: int,
         symbol: str
@@ -141,7 +149,7 @@ def update_defense(
     """Update the defender's ship board based on the result of an attack.
 
     Arguments:
-        defender: dict
+        defender: Player
             the player whose ship board is to be updated
         x: int
             the horizontal coordinate of the attack
@@ -154,24 +162,24 @@ def update_defense(
         None
     """
     if symbol == "~":
-        defender['ship_board'][x][y] = "O"  # Miss
+        defender.ship_board.data[x][y] = "O"  # Miss
     else:
-        defender['ship_board'][x][y] = "X"  # Hit
+        defender.ship_board.data[x][y] = "X"  # Hit
         if (
-                symbol in defender["ships"]
-                and not ship.is_sunk(defender["ships"][symbol])
+                symbol in defender.ships
+                and not ship.is_sunk(defender.ships[symbol])
         ):
-            ship.hit(defender["ships"][symbol])
+            ship.hit(defender.ships[symbol])
 
 
-def has_player_lost(player: dict, max_turns: int) -> bool:
+def has_player_lost(player: Player, max_turns: int) -> bool:
     """Check if the player has lost the game.
     A player loses when:
     - all of their ships have been sunk.
     - they have exceeded the maximum number of turns.
 
     Arguments:
-        player: dict
+        player: Player
             the player to check
         max_turns: int
             the maximum number of turns allowed for the player
@@ -179,9 +187,9 @@ def has_player_lost(player: dict, max_turns: int) -> bool:
     Returns:
         True if the player has lost, False otherwise.
     """
-    if player['turns_taken'] >= max_turns:
+    if player.turns_taken >= max_turns:
         return True
-    for player_ship in player['ships'].values():
+    for player_ship in player.ships.values():
         if not ship.is_sunk(player_ship):
             return False
     return True
