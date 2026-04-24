@@ -36,6 +36,70 @@ class Player:
         self.ships = ships
         self.turns_taken = 0
 
+    def update_attack(self, x: int, y: int, symbol: str) -> None:
+        """Update the attacker's attack board based on the result of an
+        attack.
+
+        Arguments:
+            x: int
+                the horizontal coordinate of the attack
+            y: int
+                the vertical coordinate of the attack
+            symbol: str
+                the symbol to represent the attack result on the board
+
+        Returns:
+            None
+        """
+        self.attack_board.set(x, y, symbol)
+
+
+    def update_defense(self, x: int, y: int, symbol: str) -> None:
+        """Update the defender's ship board based on the result of an attack.
+
+        Arguments:
+            self: Player
+                the player whose ship board is to be updated
+            x: int
+                the horizontal coordinate of the attack
+            y: int
+                the vertical coordinate of the attack
+            symbol: str
+                the symbol to represent the attack result on the board
+
+        Returns:
+            None
+        """
+        if symbol == "~":
+            self.ship_board.set(x, y, "O")  # Miss
+        else:
+            self.ship_board.set(x, y, "X")  # Hit
+            if (
+                    symbol in self.ships
+                    and not self.ships[symbol].is_sunk()
+            ):
+                self.ships[symbol].hit()
+
+    def has_player_lost(self, max_turns: int) -> bool:
+        """Check if the player has lost the game.
+        A player loses when:
+        - all of their ships have been sunk.
+        - they have exceeded the maximum number of turns.
+
+        Arguments:
+            max_turns: int
+                the maximum number of turns allowed for the player
+
+        Returns:
+            True if the player has lost, False otherwise.
+        """
+        if self.turns_taken >= max_turns:
+            return True
+        for player_ship in self.ships.values():
+            if not player_ship.is_sunk():
+                return False
+        return True
+
 
 def get_player_input(size: int) -> tuple[int, int]:
     """Get the player's input for row and column.
@@ -81,86 +145,6 @@ def is_input_valid(input_str: str, size: int) -> bool:
     row, col = int(row_str), int(col_str)
     if row < 0 or row >= size or col < 0 or col >= size:
         return False
-    return True
-
-
-def update_attack(
-        attacker: Player,
-        x: int,
-        y: int,
-        symbol: str
-) -> None:
-    """Update the attacker's attack board based on the result of an
-    attack.
-
-    Arguments:
-        attacker: Player
-            the player whose attack board is to be updated
-        x: int
-            the horizontal coordinate of the attack
-        y: int
-            the vertical coordinate of the attack
-        symbol: str
-            the symbol to represent the attack result on the board
-
-    Returns:
-        None
-    """
-    attacker.attack_board.data[x][y] = symbol
-
-
-def update_defense(
-        defender: Player,
-        x: int,
-        y: int,
-        symbol: str
-) -> None:
-    """Update the defender's ship board based on the result of an attack.
-
-    Arguments:
-        defender: Player
-            the player whose ship board is to be updated
-        x: int
-            the horizontal coordinate of the attack
-        y: int
-            the vertical coordinate of the attack
-        symbol: str
-            the symbol to represent the attack result on the board
-
-    Returns:
-        None
-    """
-    if symbol == "~":
-        defender.ship_board.data[x][y] = "O"  # Miss
-    else:
-        defender.ship_board.data[x][y] = "X"  # Hit
-        if (
-                symbol in defender.ships
-                and not ship.is_sunk(defender.ships[symbol])
-        ):
-            ship.hit(defender.ships[symbol])
-
-
-def has_player_lost(player: Player, max_turns: int) -> bool:
-    """Check if the player has lost the game.
-    A player loses when:
-    - all of their ships have been sunk.
-    - they have exceeded the maximum number of turns.
-
-    Arguments:
-        player: Player
-            the player to check
-        max_turns: int
-            the maximum number of turns allowed for the player
-
-    Returns:
-        True if the player has lost, False otherwise.
-    """
-    if player.turns_taken >= max_turns:
-        return True
-    for player_ship in player.ships.values():
-        if not ship.is_sunk(player_ship):
-            return False
     return True
 
 
