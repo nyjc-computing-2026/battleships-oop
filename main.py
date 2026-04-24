@@ -20,22 +20,22 @@ def main() -> None:
     max_turns = 30
     computer = player.Player(
         name="Computer",
-        ship_board=grid.create_grid(n=grid_size, placeholder=PLACEHOLDER),
-        attack_board=grid.create_grid(n=grid_size, placeholder=PLACEHOLDER),
+        ship_board=grid.Grid(size=grid_size, placeholder="~"),
+        attack_board=grid.Grid(size=grid_size, placeholder="~"),
         ships={
-            "B": ship.create_ship(name="Battleship", symbol="B", length=4),
-            "C": ship.create_ship(name="Cruiser", symbol="C", length=3),
-            "D": ship.create_ship(name="Destroyer", symbol="D", length=2)
+            "B": ship.Ship(name="Battleship", symbol="B", length=4),
+            "C": ship.Ship(name="Cruiser", symbol="C", length=3),
+            "D": ship.Ship(name="Destroyer", symbol="D", length=2)
         }
     )
     human = player.Player(
         name="Player",
-        ship_board=grid.create_grid(n=grid_size, placeholder="~"),
-        attack_board=grid.create_grid(n=grid_size, placeholder="~"),
+        ship_board=grid.Grid(size=grid_size, placeholder="~"),
+        attack_board=grid.Grid(size=grid_size, placeholder="~"),
         ships={
-            "B": ship.create_ship(name="Battleship", symbol="B", length=4),
-            "C": ship.create_ship(name="Cruiser", symbol="C", length=3),
-            "D": ship.create_ship(name="Destroyer", symbol="D", length=2)
+            "B": ship.Ship(name="Battleship", symbol="B", length=4),
+            "C": ship.Ship(name="Cruiser", symbol="C", length=3),
+            "D": ship.Ship(name="Destroyer", symbol="D", length=2)
         }
     )
 

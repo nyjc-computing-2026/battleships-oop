@@ -37,37 +37,6 @@ class Player:
         self.turns_taken = 0
 
 
-def create_player(
-        name: str,
-        ship_board: grid.Grid,  # grid
-        attack_board: grid.Grid,  # grid
-        ships: dict[str, ship.Ship],  # symbol: ship
-) -> Player:
-    """Create a player with the given name and an empty grid.
-
-    Arguments:
-        name: str
-            the name of the player
-        ship_board: grid.Grid
-            the player's ship board
-        attack_board: grid.Grid
-            the player's attack board
-        ships: dict[str, ship.Ship]
-            a dictionary mapping ship symbols to their details
-
-    Returns:
-        A Player object representing the player, containing their name and
-        grids.
-    """
-    return Player(
-        name=name,
-        ship_board=ship_board,
-        attack_board=attack_board,
-        ships=ships
-    )
-
-
-
 def get_player_input(size: int) -> tuple[int, int]:
     """Get the player's input for row and column.
     The function should validate the input to ensure it is within the 

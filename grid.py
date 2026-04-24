@@ -28,24 +28,6 @@ class Grid:
             self.data.append(row)
 
 
-def create_grid(n: int, placeholder: str) -> Grid:
-    """Create a n-by-n grid.
-    The grid is represented as a list of lists.
-    Each inner list represents a row.
-    Each row is filled with the placeholder character.
-
-    Arguments:
-        n: int
-            the size of the grid (n x n)
-        placeholder: str
-            the character to fill the grid with
-
-    Returns:
-        A nested list representing the grid.
-    """
-    return Grid(n, placeholder)
-
-
 def display_grid(grid: Grid) -> None:
     """Display the grid in a readable format."""
     for row in grid.data:
