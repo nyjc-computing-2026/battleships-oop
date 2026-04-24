@@ -18,20 +18,20 @@ def main() -> None:
     """Main function to run the Battleship game."""
     grid_size = 10
     max_turns = 30
-    computer = player.Player(
+    computer = player.Computer(
         name="Computer",
-        ship_board=grid.Grid(size=grid_size, placeholder="~"),
-        attack_board=grid.Grid(size=grid_size, placeholder="~"),
+        ship_board=grid.ShipGrid(size=grid_size, placeholder="~"),
+        attack_board=grid.AttackGrid(size=grid_size, placeholder="~"),
         ships={
             "B": ship.Ship(name="Battleship", symbol="B", length=4),
             "C": ship.Ship(name="Cruiser", symbol="C", length=3),
             "D": ship.Ship(name="Destroyer", symbol="D", length=2)
         }
     )
-    human = player.Player(
+    human = player.Human(
         name="Player",
-        ship_board=grid.Grid(size=grid_size, placeholder="~"),
-        attack_board=grid.Grid(size=grid_size, placeholder="~"),
+        ship_board=grid.ShipGrid(size=grid_size, placeholder="~"),
+        attack_board=grid.AttackGrid(size=grid_size, placeholder="~"),
         ships={
             "B": ship.Ship(name="Battleship", symbol="B", length=4),
             "C": ship.Ship(name="Cruiser", symbol="C", length=3),
@@ -40,25 +40,23 @@ def main() -> None:
     )
 
     # Game setup: populate ship boards and initialize attack boards
-    grid.initialize_grid(
-        grid=computer.ship_board,
+    computer.ship_board.initialize_grid(
         ships=list(computer.ships.values()),
     )
-    grid.initialize_grid(
-        grid=human.ship_board,
+    human.ship_board.initialize_grid(
         ships=list(human.ships.values()),
     )
 
     # Game loop
     while (
-            not human.has_player_lost(max_turns)
-            and not computer.has_player_lost(max_turns)
+            not human.has_lost(max_turns)
+            and not computer.has_lost(max_turns)
     ):
         # Player's turn
         print(f"{human.name}'s turn:")
         # Show player's board before input
         human.attack_board.display()
-        x, y = player.get_player_input(grid_size)
+        x, y = human.get_input()
         # Process human's attack on computer's grid
         hit_char = computer.ship_board.get(x, y)
         if hit_char in computer.ships:
