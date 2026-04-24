@@ -63,21 +63,21 @@ class Grid:
         for row in self.data:
             print(" ".join(row))
 
+    def is_valid_coordinate(self, x: int, y: int) -> bool:
+        """Check if the given coordinates are valid for the grid.
 
-def get_grid_coordinate_char(grid: Grid, x: int, y: int) -> str:
-    """Get the character at the specified grid coordinates.
+        Arguments:
+            x: int
+                the row index to validate
+            y: int
+                the column index to validate
 
-    Arguments:
-        grid: list[list[str]]
-        x: int
-            the horizontal coordinate
-        y: int
-            the vertical coordinate
-    
-    Returns:
-        The character at the specified coordinates on the grid.
-    """
-    return grid.data[x][y]
+        Returns:
+            True if the coordinates are valid, False otherwise.
+        """
+        if x < 0 or x >= self.size or y < 0 or y >= self.size:
+            return False
+        return True
 
 
 def initialize_grid(grid: Grid, ships: list[ship.Ship]) -> None:
@@ -100,24 +100,6 @@ def initialize_grid(grid: Grid, ships: list[ship.Ship]) -> None:
         while not place_ship_on_grid(grid, ship, x, y, orientation):
             x, y = utility.generate_random_coordinate(grid.size)
             orientation = utility.generate_random_orientation()
-
-
-def is_valid_coordinate(grid: Grid, x: int, y: int) -> bool:
-    """Check if the given coordinates are valid for the grid.
-
-    Arguments:
-        grid: Grid
-        x: int
-            the row index to validate
-        y: int
-            the column index to validate
-
-    Returns:
-        True if the coordinates are valid, False otherwise.
-    """
-    if x < 0 or x >= grid.size or y < 0 or y >= grid.size:
-        return False
-    return True
 
 
 def place_ship_on_grid(
@@ -171,10 +153,10 @@ def place_ship_on_grid_horizontally(
         failed due to out-of-bounds or overlap with existing ships.
     """
     for i in range(ship.length):
-        if not is_valid_coordinate(grid, x, y + i) or grid.data[x][y + i] != '~':
+        if not grid.is_valid_coordinate(x, y + i) or grid.get(x, y + i) != '~':
             return False
     for i in range(ship.length):
-        grid.data[x][y + i] = ship.symbol
+        grid.set(x, y + i, ship.symbol)
     return True
 
 
@@ -199,12 +181,12 @@ def place_ship_on_grid_vertically(
     """
     for i in range(ship.length):
         if (
-                not is_valid_coordinate(grid, x + i, y)
-                or grid.data[x + i][y] != '~'
+                not grid.is_valid_coordinate(x + i, y)
+                or grid.get(x + i, y) != '~'
         ):
             return False
     for i in range(ship.length):
-        grid.data[x + i][y] = ship.symbol
+        grid.set(x + i, y, ship.symbol)
     return True
 
 
